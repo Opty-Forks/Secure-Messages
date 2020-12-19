@@ -37,24 +37,12 @@ public class CryptoExample {
         System.out.println(plainBytes.length + " bytes");
 
         // cipher data
-        final String CIPHER_ALGO = "AES/ECB/PKCS5Padding";
-        System.out.println("Ciphering with " + CIPHER_ALGO + "...");
-        Cipher cipher = Cipher.getInstance(CIPHER_ALGO);
-        cipher.init(Cipher.ENCRYPT_MODE, key);
-        byte[] cipherBytes = cipher.doFinal(plainBytes);
-        System.out.println("Result: " + cipherBytes.length + " bytes");
-
+        byte[] cipherBytes = CryptoLib.doFinal(plainBytes, key, CryptoLib.AES_ALGO, Cipher.ENCRYPT_MODE);
         String cipherB64dString = Base64.getEncoder().encodeToString(cipherBytes);
         System.out.println("Cipher result, encoded as base 64 string: " + cipherB64dString);
 
         // digest data
-        final String DIGEST_ALGO = "SHA-256";
-        System.out.println("Digesting with " + DIGEST_ALGO + "...");
-        MessageDigest messageDigest = MessageDigest.getInstance(DIGEST_ALGO);
-        messageDigest.update(plainBytes);
-        byte[] digestBytes = messageDigest.digest();
-        System.out.println("Result: " + digestBytes.length + " bytes");
-
+        byte[] digestBytes = CryptoLib.doDigest(plainBytes);
         String digestB64dString = Base64.getEncoder().encodeToString(digestBytes);
         System.out.println("Digest result, encoded as base 64 string: " + digestB64dString);
 
